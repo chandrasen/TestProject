@@ -1,6 +1,125 @@
 <!-- this is testing purpose -->
 <!-- this is testing purpose -->
+local local edit again
 local  main site edit
+
+dfgdfgfdg
+
+<article style="padding-top: 20px;">
+<div class="newinternal-left-panel">
+<div style="padding: 10px 0 20px 0;">
+<h2><%=(ThisProperty.Bedroom > 0 ? ThisProperty.Bedroom + " BHK " : string.Empty) + ThisProperty.Type.Description() + " for " + ThisProperty.Purpose.ToString() + " in " + ThisProperty.Locality.ToString()%></h2>
+</div>
+
+<% string link = "#";
+   if (ThisProperty.Owner.CompanyName.HasValue())
+   {
+       string str = Regex.Replace(ThisProperty.Owner.CompanyName, @"\s|[.]|&", "-").TrimEnd('-');
+       link = Constants.ABSOLUTE_PATH + Regex.Replace(str, @"[-]+", "-").ToLower() + "/" + ThisProperty.Owner.ID;
+   }%>
+        
+<div class="menu-list" style="padding: 5px 0 0 0;">
+Property ID : <%=ThisProperty.ID.Value %> | Listed On : <%=ThisProperty.PostedOn.ToFriendlyString() %> | By :<%=ThisProperty.Owner.UserGroup == TTAcres.User.Group.Agent || ThisProperty.Owner.UserGroup == TTAcres.User.Group.Builder ? "<a href='" + link + "'>" + ThisProperty.Owner.Name + "</a>" : ThisProperty.Owner.Name%>  | Total Views : 2 | Detailed Views : 28
+</div>
+<div class="clear">
+</div>
+<div class="internaldetails">
+<div class="internaldetails-left">
+<div style="float:left;padding: 10px 20px 20px 0;">
+<%
+    string imagePath = string.Empty;
+    if (ThisProperty.DefaultImageID > 0)
+    {
+        imagePath = Constants.ABSOLUTE_PATH + "Photos/" + ThisProperty.ID.Value + "." + ThisProperty.DefaultImageID + ".jpg";
+      %>
+      <img src="<%=imagePath %>" width="300" height="200" alt="main image" />
+  <%}
+    else
+    {
+        imagePath = Constants.ABSOLUTE_PATH + "Content/images/home.jpg";
+        %>
+        <img src="<%=imagePath %>" border="0" alt="" style="width:100px;height:100px;" />      
+  <%} %>
+</div>
+<div style="float: right;">
+<table width="395" border="0" cellspacing="5" cellpadding="5" style="padding-top: 20px;">
+  <tr>    
+    <td><strong>Bedrooms:</strong></td>
+    <td><%=ThisProperty.Bedroom %></td>  
+    <td><strong>Bathrooms:</strong></td>
+    <td><%=ThisProperty.Bathroom %></td>    
+  </tr>
+  <tr>
+    <td><strong>Total Floors:</strong></td>
+    <td><%=ThisProperty.TotalFloor %></td>  
+    <td><strong>Total Area:</strong></td>
+    <td><%=ThisProperty.Area %> <%=ThisProperty.AreaUnit %></td>
+  </tr>
+  <tr>
+    <td><strong>Floor:</strong></td>
+    <td><%=ThisProperty.Floor %></td>    
+    <td><strong>Purpose:</strong></td>
+    <td><%=ThisProperty.Purpose %></td>
+  </tr>
+  <tr>
+    <td><strong>Property Type:</strong></td>
+    <td colspan="3"><%=ThisProperty.Type.Description() %></td>
+  </tr>
+  <tr>
+    <td><strong>Address:</strong></td>
+    <td colspan="3"><%=ThisProperty.Address %></td>
+  </tr>
+</table>
+</div>
+</div>
+<div class="internaldetails-right">
+</div>
+</div>
+
+<div class="clear"></div>
+<div id="tab1" class="matter tab_content">
+<h3>Description</h3>
+<p><%=ThisProperty.Description %></p>
+</div>
+<div class="clear"></div>
+<%if (ThisProperty.GeoCode != null)
+  {%>
+<div id="propertyMap" style="width:700px;height:400px;">
+   <PS:Map ID="PropertyMap" runat="server" IsDraggable="false" />
+</div>
+<%} %>
+
+<div class="clear"></div>
+</div>
+
+<%--Right aside--%>
+<div style="width: 244px;margin: 0px;padding: 0px;float: right;">
+<div class="newinternal-right-panel">
+<h2>Rs. <%=ThisProperty.Price %></h2>
+<h3>@ Rs. <%=ThisProperty.Price / ThisProperty.Area %>/<%=ThisProperty.AreaUnit %> </h3>
+<h1>Request More Information</h1>
+<p>Please submit the details to contact the seller</p>
+<input id="txtName" name="txtName" type="text" placeholder="Your Full Name">
+<input id="txtEmail" name="txtEmail" type="text" placeholder="Email">
+<input id="txtMobile" name="txtMobile" type="text" placeholder="Mobile">
+<table width="100%" border="0" cellspacing="5" cellpadding="0" style="margin:0px; padding:7px;">
+  <tr>
+    <td><input name="" type="checkbox" value=""></td>
+    <td><span class="style17">Request for site visit</span></td>
+  </tr>  
+   <tr>
+    <td valign="top"><input name="" type="checkbox" value=""></td>
+    <td><span class="style17">Send me email alerts for similar properties and contact me for best deals by Makaan.com clients. T & C applied.</span></td>
+  </tr>
+</table>
+<input type="button" id="btnContact" name="contact" value="Contact" />
+</div>
+<PS:SimilarProperties ID="SimilarProperties1" runat="server" />
+</div>
+
+
+</article>
+   
 
 dfgdfgfdg
 
